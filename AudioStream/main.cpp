@@ -11,10 +11,14 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    MainWidget w;
-    w.show();
+    MainWidget* w = new MainWidget;
+    w->show();
 
     int ret = a.exec();
+
+    delete w;
+
     CAudioUtil::Clear();
+
     return ret;
 }

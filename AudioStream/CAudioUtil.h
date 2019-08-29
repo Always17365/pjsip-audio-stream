@@ -43,6 +43,8 @@ public:
 		unsigned short uRemotePort);				
 	// 销毁音频设备流
 	void SoundStreamDestroy();
+    // 音频设备流是否创建
+    bool IsSoundStreamCreated();
 	// 暂停音频设备流
 	void SoundStreamPause(AUDIO_DIR dir);
 	// 恢复音频设备流

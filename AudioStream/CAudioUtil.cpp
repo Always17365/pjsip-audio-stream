@@ -26,6 +26,10 @@ CAudioUtil::CAudioUtil()
 
 CAudioUtil::~CAudioUtil()
 {
+    if (IsSoundStreamCreated())
+    {
+        SoundStreamDestroy();
+    }
 }
 
 int CAudioUtil::Init()
@@ -186,7 +190,12 @@ void CAudioUtil::SoundStreamDestroy()
         m_pSoundPort = nullptr;
 		DestroyAudStream(m_pStream);
         m_pStream = nullptr;
-	}
+    }
+}
+
+bool CAudioUtil::IsSoundStreamCreated()
+{
+    return m_pStream;
 }
 
 void CAudioUtil::SoundStreamPause(AUDIO_DIR dir)
