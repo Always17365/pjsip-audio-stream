@@ -83,4 +83,8 @@ macos {
     LIBS += \
             -framework AudioToolbox \
             -framework CoreAudio
+    QMAKE_INFO_PLIST = $$PWD/res/Info_mac.plist
 }
+
+RESOURCES += \
+    res.qrc
