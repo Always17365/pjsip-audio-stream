@@ -1,6 +1,11 @@
 # pjsip-audio-stream
 基于pjsip的简单音频通话
 
+# 运行
+mac端直接运行app可能权限不够，需要在偏好设置-安全和隐私中允许运行，启动的时候记得给麦克风权限
+
+10.14.5以上系统需要按住control键在点击应用，在弹出菜单中选择打开
+
 # 组成
 - AudioStream：基于pjsip封装的音频推流/拉流客户端
 - MediaServer：简单的UDP服务器，用于转发音频流

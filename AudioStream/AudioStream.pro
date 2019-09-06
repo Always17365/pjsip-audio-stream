@@ -86,6 +86,3 @@ macos {
 
     QMAKE_INFO_PLIST = $$PWD/res/Info.plist
 }
-
-RESOURCES += \
-    res.qrc

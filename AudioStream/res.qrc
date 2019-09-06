@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>res/Info_mac.plist</file>
-    </qresource>
-</RCC>
