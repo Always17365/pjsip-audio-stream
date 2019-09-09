@@ -90,6 +90,16 @@ freeswitch -stop
 netstat -anp | grep freeswitch
 ```
 
+6. 无法主动挂断，30s后自己挂断
+
+Wireshark抓包查看问题，发现sip消息有问题，地址ip被替换为外网ip导致消息发送不到FS；
+
+解决：打开/etc/freeswitch/sip_profiles下的配置文件internal.xml，将外网配置注释掉，重启FS；
+```
+<!--<param name="ext-rtp-ip" value="$${external_rtp_ip}"> -->
+<!--<param name="ext-sip-ip" value="$${external_rtp_ip}"> -->
+```
+
 # 客户端测试
 FreeSWITCH使用make install安装完成后，默认就配置了1000~1019共20个账户，不用做任何其它配置，就可以开始我们的基本通话测试了，非常人性化。
 
