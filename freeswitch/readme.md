@@ -50,6 +50,46 @@ sudo service network restart
 ip addr # 可以看到ens33中的ip地址
 ```
 
+4. 呼叫挂断都很慢
+freeswitch没有修改用户默认密码的话会强制10s延迟，所以修改用户默认密码就好了
+```
+# 查找配置文件位置
+find / -name vars.xml
+```
+我的vars.xml在这个位置/etc/freeswitch/vars.xml
+
+在FreeSwitch系统中，所有用户的密码默认为 1234，该设置在 /etc/freeswitch/vars.xml 中，如下所示：
+```
+<X-PRE-PROCESS cmd=”set” data=”default_password=1234″/>
+```
+修改为
+```
+<X-PRE-PROCESS cmd=”set” data=”default_password=123456″/>
+```
+
+用户使用密码123456注册上就OK啦
+
+5. freeswitch常用命令
+```
+# 查看帮助
+freeswitch -help
+
+# 启动freeswitch
+freeswitch
+
+# 关闭freeswitch
+shutdown
+
+# 后台启动
+freeswitch -nc
+
+# 关闭后台freeswitch
+freeswitch -stop
+
+# 查看freeswitch是否正常启动
+netstat -anp | grep freeswitch
+```
+
 # 客户端测试
 FreeSWITCH使用make install安装完成后，默认就配置了1000~1019共20个账户，不用做任何其它配置，就可以开始我们的基本通话测试了，非常人性化。
 
