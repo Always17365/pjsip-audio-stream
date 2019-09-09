@@ -1,0 +1,1 @@
+git clone -b v1.6 https://freeswitch.org/stash/scm/fs/freeswitch.git freeswitch
