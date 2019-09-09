@@ -1,40 +1,28 @@
-# centos7下安装freeswitch版本:1.6。
+# centos7下安装freeswitch
 
-1. 下载源代码：
-进入目录 cd /usr/local/src
+## rpm安装（推荐）
+[参考文档](https://freeswitch.org/confluence/display/FREESWITCH/CentOS+7+and+RHEL+7)
 
-克隆原代码
+1. 安装
 ```
-git clone -b v1.6 https://freeswitch.org/stash/scm/fs/freeswitch.git freeswitch
-```
-
-2. 安装依赖库：
-```
-yum install -y git gcc-c++ wget alsa-lib-devel autoconf automake bison broadvoice-devel bzip2 curl-devel db-devel e2fsprogs-devel flite-devel g722_1-devel gdbm-devel gnutls-devel ilbc2-devel ldns-devel libcodec2-devel libcurl-devel libedit-devel libidn-devel libjpeg-devel libmemcached-devel libogg-devel libsilk-devel libsndfile-devel libtiff-devel libtheora-devel libtool libvorbis-devel libxml2-devel lua-devel lzo-devel mongo-c-driver-devel ncurses-devel net-snmp-devel openssl-devel opus-devel pcre-devel perl perl-ExtUtils-Embed pkgconfig portaudio-devel postgresql-devel python26-devel python-devel soundtouch-devel speex-devel sqlite-devel unbound-devel unixODBC-devel libuuid-devel which yasm zlib-devel
+./install.sh
 ```
 
-2. 开始编译
+2. 启动
 ```
-cd/ freeswitch
-./bootstrap.sh
-./configure
-make
-make install
+systemctl enable freeswitch.service
 ```
 
-3. 启动freeswitch
+查看freeswitch是否启动
+
 ```
-cd /usr/local/freeswitch/bin/
-./freeswitch
+netstat -an | grep 5060
 ```
 
-4. 配置freeswitch在任何一个路径都可以运行
-```
-ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/
-ln -sf /usr/local/freeswitch/bin/fs_cli /usr/bin/
-```
+## 编译安装（不推荐）
+[参考文档](https://wsonh.com/article/64.html)
 
-# 启动失败解决
+# 常见问题
 
 1. 如果运行freeswitch出现以下错误，是因为端口被占用了。
 [root@localhost ~]# freeswitch
@@ -44,4 +32,42 @@ Cannot lock pid file /usr/local/freeswitch/run/freeswitch.pid.
 
 2. 如果freeswitch启动成功，但是linphone注册不上。
 
-解决办法：systemctl stop firewalld.service （关闭防火墙）
+解决办法：
+```
+# 查看防火墙状态
+systemctl status firewalld.service
+# 关闭防火墙
+systemctl stop firewalld.service
+# 取消防火墙开机启动
+systemctl disable firewalld.service
+```
+
+
+3. centos默认网卡没有启动
+```
+vi /etc/sysconfig/network-scripts/ifcfg-ens33 # 修改ONBOOT=yes，并保存
+sudo service network restart
+ip addr # 可以看到ens33中的ip地址
+```
+
+# 客户端测试
+FreeSWITCH使用make install安装完成后，默认就配置了1000~1019共20个账户，不用做任何其它配置，就可以开始我们的基本通话测试了，非常人性化。
+
+- 查看freeswitch监听的ip地址，后面我们要用这个ip地址配置microsip
+```
+netstat -an | grep 5060
+```
+
+- 下载客户端
+
+windows: [microsip](https://www.microsip.org/)
+
+mac: [xlite](https://www.counterpath.com/x-lite-download/)
+
+- 添加账户，Domain应该填写FreeSWITCH服务器的IP地址，Username可以填1000~1019其中一个，Password是1234，具体如图：
+
+![pjsip](../doc/pjsip.png)
+
+再不同机器上启动microsip登上不同账号可以互相呼叫
+
+
