@@ -104,7 +104,7 @@ windows: [microsip](https://www.microsip.org/)
 
 mac: [xlite](https://www.counterpath.com/x-lite-download/)
 
-- 添加账户，Domain应该填写FreeSWITCH服务器的IP地址，Username可以填1000~1019其中一个，Password是1234，具体如图：
+- 添加账户，ip/domain应该填写FreeSWITCH服务器的IP地址，Username可以填1000~1019其中一个，password修改为123456，具体如图：
 
 ![pjsip](../doc/pjsip.png)
 
